@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.OutlinedTextField
@@ -54,11 +55,11 @@ fun BiodataScreen() {
     var expExpanded by remember { mutableStateOf(false) }
     var isSubmitted by remember { mutableStateOf(false) }
 
-    var isFormValid =
+    val isFormValid =
         namaDepan.isNotBlank() && namaBelakang.isNotBlank() && email.isNotBlank() && tglLahir.isNotBlank()
         && (skillAndroid || skillUiUx || skillWeb)
 
-    var expList = listOf(
+    val expList = listOf(
         stringResource(id = R.string.exp_1),
         stringResource(id = R.string.exp_2),
         stringResource(id = R.string.exp_3),
@@ -160,6 +161,20 @@ fun BiodataScreen() {
                                 shape = RoundedCornerShape(16.dp),
                                 modifier = Modifier.menuAnchor()
                             )
+                            ExposedDropdownMenu(
+                                expanded = expExpanded,
+                                onDismissRequest = { expExpanded = false }
+                            ) {
+                                expList.forEach { selectionOption ->
+                                    DropdownMenuItem(
+                                        text = { Text(selectionOption) },
+                                        onClick = {
+                                            experience = selectionOption
+                                            expExpanded = false
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 }
