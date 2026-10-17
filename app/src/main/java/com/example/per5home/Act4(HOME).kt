@@ -12,4 +12,5 @@ import androidx.compose.runtime.setValue
 fun BiodataScreen() {
     var namaDepan by remember { mutableStateOf("") }
     var namaBelakang by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
 }
