@@ -1,10 +1,15 @@
 package com.example.per5home
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @OptIn(ExperimentalStdlibApi::class)
 @Composable
 
 fun BiodataScreen() {
+    var namaDepan by remember { mutableStateOf("") }
 
 }
