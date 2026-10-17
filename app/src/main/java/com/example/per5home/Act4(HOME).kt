@@ -18,6 +18,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -190,7 +192,16 @@ fun BiodataScreen() {
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = skillAndroid,
+                                onCheckedChange = { skillAndroid = it },
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = colorResource(id = R.color.theme_dark),
+                                )
+                            )
+                            Text(StringResource(id = R.string.skill_android), fontSize = 14.sp)
+                        }
                     }
                 }
             }
