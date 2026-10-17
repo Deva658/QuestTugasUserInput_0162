@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalStdlibApi::class)
 @Composable
@@ -26,4 +27,10 @@ fun BiodataScreen() {
     var isFormValid =
         namaDepan.isNotBlank() && namaBelakang.isNotBlank() && email.isNotBlank() && tglLahir.isNotBlank()
         && (skillAndroid || skillUiUx || skillWeb)
+
+    var expList = listOf(
+        stringResource(id = R.string.exp_1),
+        stringResource(id = R.string.exp_2),
+        stringResource(id = R.string.exp_3),
+    )
 }
