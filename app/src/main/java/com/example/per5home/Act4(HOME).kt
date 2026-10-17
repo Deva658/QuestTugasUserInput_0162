@@ -1,5 +1,6 @@
 package com.example.per5home
 
+import android.graphics.drawable.Icon
 import android.view.RoundedCorner
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -125,6 +126,23 @@ fun BiodataScreen() {
                                 modifier = Modifier.weight(1f)
                             )
                         }
+                        Spacer(modifier = Modifier.height(12.dp))
+                        OutlinedTextField(
+                            value = email,
+                            onValueChange = { email = it },
+                            placeholder = { Text(stringResource(id = R.string.hint_email)) },
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        OutlinedTextField(
+                            value = tglLahir,
+                            onValueChange = { tglLahir = it },
+                            placeholder = { Text(stringResource(id = R.string.hint_tgl_lahir)) },
+                            trailingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) },
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier.weight(1f)
+                        )
                     }
                 }
             }
