@@ -19,4 +19,6 @@ fun BiodataScreen() {
     var skillAndroid by remember { mutableStateOf(false) }
     var skillUiUx by remember { mutableStateOf(false) }
     var skillWeb by remember { mutableStateOf(false) }
+
+    var expExpanded by remember { mutableStateOf(false) }
 }
