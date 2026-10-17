@@ -17,4 +17,5 @@ fun BiodataScreen() {
     var experience by remember { mutableStateOf("") }
 
     var skillAndroid by remember { mutableStateOf(false) }
+    var skillUiUx by remember { mutableStateOf(false) }
 }
