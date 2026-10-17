@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +26,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalStdlibApi::class)
 @Composable
@@ -87,7 +90,19 @@ fun BiodataScreen() {
                     Column(
                         modifier = Modifier.fillMaxSize().padding(24.dp).verticalScroll(rememberScrollState()),
                         horizontalAlignment = Alignment.CenterHorizontally
-                    ) { }
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.form_title),
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(id = R.color.theme_dark)
+                        )
+                        Text(
+                            text = stringResource(id = R.string.form_subtitle),
+                            fontSize = 12.sp,
+                            color = colorResource(id = R.color.theme_gray)
+                        )
+                    }
                 }
             }
         }
