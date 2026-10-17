@@ -65,7 +65,22 @@ fun BiodataScreen() {
                     .padding(top = 220.dp), shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
                         colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.bg_white)),
                         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-            ) { }
+            ) {
+                if (isSubmitted) {
+                    ResultCard(
+                        namaLengkap = "$namaDepan $namaBelakang",
+                        email = email,
+                        tglLahir = tglLahir,
+                        experience = experience,
+                        skills = listOfNotNull(
+                            if (skillAndroid) stringResource(id = R.string.skill_android) else null,
+                            if (skillUiUx) stringResource(id = R.string.skill_uiux) else null,
+                            if (skillWeb) stringResource(id = R.string.skill_web) else null
+                        ).joinToString(", "),
+                        onBack = { isSubmitted = false }
+                    )
+                }
+            }
         }
     }
 }
