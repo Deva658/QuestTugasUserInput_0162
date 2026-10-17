@@ -228,3 +228,44 @@ fun BiodataScreen() {
         }
     }
 }
+
+@Composable
+fun ResultCard(
+    namaLengkap: String,
+    email: String,
+    tglLahir: String,
+    experience: String,
+    skills: String,
+    onBack: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = stringResource(id = R.string.hasil_title),
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            color = colorResource(id = R.color.theme_dark)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Nama: $namaLengkap", fontSize = 16.sp, modifier = Modifier.padding(bottom = 4.dp))
+        Text(text = "Email: $email", fontSize = 16.sp, modifier = Modifier.padding(bottom = 4.dp))
+        Text(text = "Tanggal Lahir: $tglLahir", fontSize = 16.sp, modifier = Modifier.padding(bottom = 4.dp))
+        Text(text = "Experience: $experience", fontSize = 16.sp, modifier = Modifier.padding(bottom = 4.dp))
+        Text(text = "Skills: $skills", fontSize = 16.sp)
+        Spacer(modifier = Modifier.height(32.dp))
+        Button(
+            onClick = onBack,
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.theme_dark)),
+            modifier = Modifier.fillMaxWidth().height(50.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.btn_kembali),
+                color = colorResource(id = R.color.text_white)
+            )
+        }
+    }
+}
