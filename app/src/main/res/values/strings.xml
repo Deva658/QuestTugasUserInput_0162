@@ -7,4 +7,6 @@
     <string name="hint_email">Email</string>
     <string name="hint_tgl_lahir">Tgl Lahir</string>
     <string name="hint_experience">Experience</string>
+
+    <string name="label_skill">Pilih Skill Anda :</string>
 </resources>
