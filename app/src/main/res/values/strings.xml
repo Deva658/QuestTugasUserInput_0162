@@ -16,4 +16,5 @@
     <string name="btn_proceed">Proceed</string>
 
     <string name="exp_1">0 - 1 Tahun</string>
+    <string name="exp_2">1 - 3 Tahun</string>
 </resources>
