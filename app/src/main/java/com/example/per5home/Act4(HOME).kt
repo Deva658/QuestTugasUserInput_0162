@@ -3,6 +3,7 @@ package com.example.per5home
 import android.graphics.drawable.Icon
 import android.view.RoundedCorner
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -176,6 +177,20 @@ fun BiodataScreen() {
                                 }
                             }
                         }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = stringResource(id = R.string.label_skill),
+                        fontWeight = FontWeight.Bold,
+                        color = colorResource(id = R.color.theme_dark),
+                        modifier = Modifier.align(Alignment.Start)
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
                     }
                 }
             }
