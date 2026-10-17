@@ -4,3 +4,7 @@ import androidx.compose.runtime.Composable
 
 @OptIn(ExperimentalStdlibApi::class)
 @Composable
+
+fun BiodataScreen() {
+
+}
