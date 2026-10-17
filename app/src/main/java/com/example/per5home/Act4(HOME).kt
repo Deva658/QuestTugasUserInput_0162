@@ -21,4 +21,5 @@ fun BiodataScreen() {
     var skillWeb by remember { mutableStateOf(false) }
 
     var expExpanded by remember { mutableStateOf(false) }
+    var isSubmitted by remember { mutableStateOf(false) }
 }
