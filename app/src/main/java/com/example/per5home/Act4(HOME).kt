@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -33,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -202,6 +205,23 @@ fun BiodataScreen() {
                             )
                             Text(StringResource(id = R.string.skill_android), fontSize = 14.sp)
                         }
+                    }
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Button(
+                        onClick = { isSubmitted = true },
+                        enabled = isFormValid,
+                        shape = RoundedCornerShape(16.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorResource(id = R.color.theme_dark),
+                            disabledContainerColor = colorResource(id = R.color.btn_disabled)
+                        ),
+                        modifier = Modifier.fillMaxWidth().height(50.dp).shadow(elevation = if (isFormValid) 8.dp else 0.dp, shape = RoundedCornerShape(16.dp)
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.btn_proceed),
+                            color = if (isFormValid) colorResource(id = R.color.text_white) else colorResource(id = R.color.theme_gray),
+                        )
                     }
                 }
             }
