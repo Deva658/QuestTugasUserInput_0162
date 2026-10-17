@@ -22,4 +22,8 @@ fun BiodataScreen() {
 
     var expExpanded by remember { mutableStateOf(false) }
     var isSubmitted by remember { mutableStateOf(false) }
+
+    var isFormValid =
+        namaDepan.isNotBlank() && namaBelakang.isNotBlank() && email.isNotBlank() && tglLahir.isNotBlank()
+        && (skillAndroid || skillUiUx || skillWeb)
 }
