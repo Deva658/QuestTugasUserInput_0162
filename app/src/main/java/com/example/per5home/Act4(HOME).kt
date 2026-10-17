@@ -1,7 +1,9 @@
 package com.example.per5home
 
-import android.graphics.drawable.Icon
-import android.view.RoundedCorner
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,11 +45,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.IconButton
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
-fun BiodataScreen() {
+fun BiodataScreen(modifier: Modifier) {
     var namaDepan by remember { mutableStateOf("") }
     var namaBelakang by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -60,16 +69,41 @@ fun BiodataScreen() {
 
     var expExpanded by remember { mutableStateOf(false) }
     var isSubmitted by remember { mutableStateOf(false) }
+    var showDatePicker by remember { mutableStateOf(false) }
+    val datePickerState = rememberDatePickerState()
 
     val isFormValid =
         namaDepan.isNotBlank() && namaBelakang.isNotBlank() && email.isNotBlank() && tglLahir.isNotBlank()
-        && (skillAndroid || skillUiUx || skillWeb)
+                && experience.isNotBlank() && (skillAndroid || skillUiUx || skillWeb)
 
     val expList = listOf(
         stringResource(id = R.string.exp_1),
         stringResource(id = R.string.exp_2),
         stringResource(id = R.string.exp_3),
     )
+    if (showDatePicker) {
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDatePicker = false
+                    val millis = datePickerState.selectedDateMillis
+                    if (millis != null) {
+                        val formatter = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                        tglLahir = formatter.format(Date(millis))
+                    }
+                }) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePicker = false }) { Text("Batal") }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
+    }
+
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier.fillMaxSize().padding(paddingValues)
@@ -83,9 +117,10 @@ fun BiodataScreen() {
             Card(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 220.dp), shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-                        colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.bg_white)),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                    .padding(top = 220.dp),
+                shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                colors = CardDefaults.cardColors(containerColor = colorResource(id = R.color.bg_white)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
                 if (isSubmitted) {
                     ResultCard(
@@ -117,7 +152,6 @@ fun BiodataScreen() {
                             color = colorResource(id = R.color.theme_gray)
                         )
                         Spacer(modifier = Modifier.height(24.dp))
-
                         Row(modifier = Modifier.fillMaxWidth()) {
                             OutlinedTextField(
                                 value = namaDepan,
@@ -144,84 +178,107 @@ fun BiodataScreen() {
                             modifier = Modifier.fillMaxWidth()
                         )
                         Spacer(modifier = Modifier.height(12.dp))
-                        OutlinedTextField(
-                            value = tglLahir,
-                            onValueChange = { tglLahir = it },
-                            placeholder = { Text(stringResource(id = R.string.hint_tgl_lahir)) },
-                            trailingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) },
-                            shape = RoundedCornerShape(16.dp),
-                            modifier = Modifier.weight(1f)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        ExposedDropdownMenuBox(
-                            expanded = expExpanded,
-                            onExpandedChange = { expExpanded = !expExpanded },
-                            modifier = Modifier.weight(1f)
-                        ) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
                             OutlinedTextField(
-                                value = experience,
+                                value = tglLahir,
                                 onValueChange = { },
                                 readOnly = true,
-                                placeholder = { Text(stringResource(id = R.string.hint_experience)) },
-                                trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
+                                placeholder = { Text(stringResource(id = R.string.hint_tgl_lahir)) },
+                                trailingIcon = {
+                                    IconButton(onClick = { showDatePicker = true }) {
+                                        Icon(Icons.Default.DateRange, contentDescription = null)
+                                    }
+                                },
                                 shape = RoundedCornerShape(16.dp),
-                                modifier = Modifier.menuAnchor()
+                                modifier = Modifier.weight(1f)
                             )
-                            ExposedDropdownMenu(
+                            Spacer(modifier = Modifier.width(8.dp))
+                            ExposedDropdownMenuBox(
                                 expanded = expExpanded,
-                                onDismissRequest = { expExpanded = false }
+                                onExpandedChange = { expExpanded = !expExpanded },
+                                modifier = Modifier.weight(1f)
                             ) {
-                                expList.forEach { selectionOption ->
-                                    DropdownMenuItem(
-                                        text = { Text(selectionOption) },
-                                        onClick = {
-                                            experience = selectionOption
-                                            expExpanded = false
-                                        }
-                                    )
+                                OutlinedTextField(
+                                    value = experience,
+                                    onValueChange = { },
+                                    readOnly = true,
+                                    placeholder = { Text(stringResource(id = R.string.hint_experience)) },
+                                    trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
+                                    shape = RoundedCornerShape(16.dp),
+                                    modifier = Modifier.menuAnchor()
+                                )
+                                ExposedDropdownMenu(
+                                    expanded = expExpanded,
+                                    onDismissRequest = { expExpanded = false }
+                                ) {
+                                    expList.forEach { selectionOption ->
+                                        DropdownMenuItem(
+                                            text = { Text(selectionOption) },
+                                            onClick = {
+                                                experience = selectionOption
+                                                expExpanded = false
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         }
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        text = stringResource(id = R.string.label_skill),
-                        fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.theme_dark),
-                        modifier = Modifier.align(Alignment.Start)
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Checkbox(
-                                checked = skillAndroid,
-                                onCheckedChange = { skillAndroid = it },
-                                colors = CheckboxDefaults.colors(
-                                    checkedColor = colorResource(id = R.color.theme_dark),
-                                )
-                            )
-                            Text(StringResource(id = R.string.skill_android), fontSize = 14.sp)
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Button(
-                        onClick = { isSubmitted = true },
-                        enabled = isFormValid,
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colorResource(id = R.color.theme_dark),
-                            disabledContainerColor = colorResource(id = R.color.btn_disabled)
-                        ),
-                        modifier = Modifier.fillMaxWidth().height(50.dp).shadow(elevation = if (isFormValid) 8.dp else 0.dp, shape = RoundedCornerShape(16.dp)
-                        )
-                    ) {
+                        Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = stringResource(id = R.string.btn_proceed),
-                            color = if (isFormValid) colorResource(id = R.color.text_white) else colorResource(id = R.color.theme_gray),
+                            text = stringResource(id = R.string.label_skill),
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(id = R.color.theme_dark),
+                            modifier = Modifier.align(Alignment.Start)
                         )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Checkbox(
+                                    checked = skillAndroid,
+                                    onCheckedChange = { skillAndroid = it },
+                                    colors = CheckboxDefaults.colors(checkedColor = colorResource(id = R.color.theme_dark))
+                                )
+                                Text(stringResource(id = R.string.skill_android), fontSize = 14.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Checkbox(
+                                    checked = skillUiUx,
+                                    onCheckedChange = { skillUiUx = it },
+                                    colors = CheckboxDefaults.colors(checkedColor = colorResource(id = R.color.theme_dark))
+                                )
+                                Text(stringResource(id = R.string.skill_uiux), fontSize = 14.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Checkbox(
+                                    checked = skillWeb,
+                                    onCheckedChange = { skillWeb = it },
+                                    colors = CheckboxDefaults.colors(checkedColor = colorResource(id = R.color.theme_dark))
+                                )
+                                Text(stringResource(id = R.string.skill_web), fontSize = 14.sp)
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Button(
+                            onClick = { isSubmitted = true },
+                            enabled = isFormValid,
+                            shape = RoundedCornerShape(16.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colorResource(id = R.color.theme_dark),
+                                disabledContainerColor = colorResource(id = R.color.btn_disabled)
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                                .shadow(elevation = if (isFormValid) 8.dp else 0.dp, shape = RoundedCornerShape(16.dp))
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.btn_proceed),
+                                color = if (isFormValid) colorResource(id = R.color.text_white) else colorResource(id = R.color.theme_gray)
+                            )
+                        }
                     }
                 }
             }

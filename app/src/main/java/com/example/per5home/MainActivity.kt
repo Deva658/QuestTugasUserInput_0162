@@ -20,8 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Per5HOMETheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    BiodataScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
