@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,7 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-@OptIn(ExperimentalStdlibApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
 fun BiodataScreen() {
@@ -143,6 +145,22 @@ fun BiodataScreen() {
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier.weight(1f)
                         )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        ExposedDropdownMenuBox(
+                            expanded = expExpanded,
+                            onExpandedChange = { expExpanded = !expExpanded },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            OutlinedTextField(
+                                value = experience,
+                                onValueChange = { },
+                                readOnly = true,
+                                placeholder = { Text(stringResource(id = R.string.hint_experience)) },
+                                trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null) },
+                                shape = RoundedCornerShape(16.dp),
+                                modifier = Modifier.menuAnchor()
+                            )
+                        }
                     }
                 }
             }
